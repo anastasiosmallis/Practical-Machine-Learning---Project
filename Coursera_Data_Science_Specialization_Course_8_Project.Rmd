@@ -8,7 +8,7 @@ In this project, our goal is to use data from accelerometers on the belt, forear
 
 For more information on the data and the goal of its collection please refer to [Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H.](http://groupware.les.inf.puc-rio.br/har#ixzz3ysiRm5VJ)
 
-```{r, eval=FALSE}
+```{r}
 # Downloading the data
 train<-read.csv("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv",header = TRUE, na.strings=c("NA","#DIV/0!",""))
 test<-read.csv("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv", header = TRUE, na.strings=c("NA","#DIV/0!",""))
@@ -28,7 +28,7 @@ I will only perform the analysis on the relevant variables.
 Last but not least I will perform a 2-fold Cross Validation on the training set.
 This willmake the accuracy close to the out of sample accuracy.
 
-```{r, eval=FALSE}
+```{r}
 library(caret)
 library(randomForest)
 library(gbm)
@@ -89,15 +89,15 @@ acc_lasso<-confusionMatrix(plasso,train$classe)$overall['Accuracy']
 
 ```
 See bellow the out-of-sample accuracy of the four models.
-1. Random Forest: .99.
-2. Generalized Boosted Regression Modeling: .98.
-3. Linear Discriminant Analysis: .97.
-4. Least Absolute Shrinkage and Selection Operator: .98.
+1. Random Forest: `r accrf`.
+2. Generalized Boosted Regression Modeling: `r accgbm`.
+3. Linear Discriminant Analysis: `r acclda`.
+4. Least Absolute Shrinkage and Selection Operator: `r acclasso`.
 
 Now I am going to combine all the methods to find if the combination has better accuracy and if this is they case use that as my predictor.
-```{r, eval=FALSE}
+```{r}
 combined<-data.frame(prf, pgbm, plda, plasso, train$classe)
 fit<- train(classe~., data= combined)
 acc<-confusionMatrix(fit,train$classe)$overall['Accuracy']
 ```
-The combined method's accurancy is .99.
+The combined method's accurancy is `r acc`.
