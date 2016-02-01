@@ -60,7 +60,6 @@ acc_rf<-confusionMatrix(prf,train$classe)$overall['Accuracy']
 # 2. Generalized Boosted Regression Modeling
 # train
 fit_gbm<- train(classe~., data=modeltrain,
-                trControl = fitControl,
                 method = "gbm")
 # predict
 pgbm<-predict(fit_gbm)
